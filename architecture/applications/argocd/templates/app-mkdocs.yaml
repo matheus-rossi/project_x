@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mkdocs
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/DeiraTool/docs.git
+    targetRevision: main
+    path: root
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: mkdocs
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
